@@ -23,6 +23,7 @@ export default class Dots extends Component {
       activeDotWidth: PropTypes.number,
       passiveColor: PropTypes.string,
       activeColor: PropTypes.string,
+      dotVerticalAlignment: PropTypes.string,
 
       // active Border
       activeBorder: PropTypes.bool,
@@ -42,6 +43,7 @@ export default class Dots extends Component {
     activeDotWidth: 15,
     passiveColor: "#CCCCCC",
     activeColor: "#016bd8",
+    dotVerticalAlignment: "center",
 
     activeBorder: false,
     activeBorderWidth: 3,
@@ -81,10 +83,9 @@ export default class Dots extends Component {
       activeBorderWidth,
       activeBorderColor,
       marginHorizontal,
-      alignDotsOnXAxis
+      dotVerticalAlignment
     } = this.props;
     const width = isActive ? activeDotWidth : passiveDotWidth;
-    const marginTop = alignDotsOnXAxis || !isActive ? 0 : -width / 6;
 
     let style = {
       width,
@@ -92,7 +93,7 @@ export default class Dots extends Component {
       marginHorizontal,
       backgroundColor: isActive ? activeColor : passiveColor,
       borderRadius: width,
-      marginTop,
+      alignSelf: dotVerticalAlignment
     };
 
     // active Border Styles.
@@ -121,7 +122,13 @@ export default class Dots extends Component {
         <ScrollView
           ref="_scrollView"
           style={{ width: width < scrollWidth ? width : scrollWidth }}
-          contentContainerStyle={{ paddingVertical, paddingHorizontal }}
+          contentContainerStyle={{
+            paddingVertical,
+            paddingHorizontal,
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "center"
+          }}
           scalesPageToFit={scalesPageToFit}
           bounces={false}
           horizontal={true}
